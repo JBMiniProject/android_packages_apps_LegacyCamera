@@ -1256,7 +1256,9 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         final String[] OTHER_SETTING_KEYS = {
                 CameraSettings.KEY_RECORD_LOCATION,
                 CameraSettings.KEY_PICTURE_SIZE,
-                CameraSettings.KEY_FOCUS_MODE};
+                CameraSettings.KEY_FOCUS_MODE,
+                CameraSettings.KEY_JPEG
+                };
 
         CameraPicker.setImageResourceId(R.drawable.ic_switch_photo_facing_holo_light);
         mIndicatorControlContainer.initialize(this, mPreferenceGroup,
@@ -1992,8 +1994,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         }
 
         // Set JPEG quality.
-        int jpegQuality = CameraProfile.getJpegEncodingQualityParameter(mCameraId,
-                CameraProfile.QUALITY_HIGH);
+        int jpegQuality = Integer.parseInt(mPreferences.getString(CameraSettings.KEY_JPEG, getString(R.string.pref_camera_jpeg_default)));
         mParameters.setJpegQuality(jpegQuality);
 
         // For the following settings, we need to check if the settings are
