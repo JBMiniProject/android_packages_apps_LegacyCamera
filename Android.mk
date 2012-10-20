@@ -9,11 +9,13 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
 LOCAL_PACKAGE_NAME := LegacyCamera
 #LOCAL_SDK_VERSION := current
+endif
 
 LOCAL_JNI_SHARED_LIBRARIES := libjni_legacymosaic
 
 LOCAL_REQUIRED_MODULES := libjni_legacymosaic
 
+ifneq (,$(findstring Gallery2,$(PRODUCT_PACKAGES)))
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 include $(BUILD_PACKAGE)
