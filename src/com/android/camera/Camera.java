@@ -1342,7 +1342,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
                 mHandler.removeMessages(SHOW_TAP_TO_FOCUS_TOAST);
                 showTapToFocusToast();
             }
-        mRecordingTimeRect.setOrientation(mOrientationCompensation, false);
+        mRecordingTimeRect.setOrientation(mOrientationCompensation);
         }
     }
 
