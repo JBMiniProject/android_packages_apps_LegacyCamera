@@ -55,6 +55,7 @@ public class CameraSettings {
     public static final String KEY_CAMERA_ID = "pref_camera_id_key";
     public static final String KEY_CAMERA_FIRST_USE_HINT_SHOWN = "pref_camera_first_use_hint_shown_key";
     public static final String KEY_VIDEO_FIRST_USE_HINT_SHOWN = "pref_video_first_use_hint_shown_key";
+    public static final String KEY_ISO = "pref_camera_iso_key";
 
     public static final String EXPOSURE_DEFAULT_VALUE = "0";
 
@@ -151,6 +152,7 @@ public class CameraSettings {
                 group.findPreference(KEY_VIDEOCAMERA_FLASH_MODE);
         ListPreference videoEffect = group.findPreference(KEY_VIDEO_EFFECT);
         ListPreference burstMode = group.findPreference(KEY_BURST_MODE);
+        ListPreference iso = group.findPreference(KEY_ISO);
 
         // Since the screen could be loaded from different resources, we need
         // to check if the preference is available here
@@ -194,6 +196,10 @@ public class CameraSettings {
         if (videoEffect != null) {
             initVideoEffect(group, videoEffect);
             resetIfInvalid(videoEffect);
+        }
+        if (iso != null) {
+            filterUnsupportedOptions(group,
+                    iso, mParameters.getSupportedIsoValues());
         }
         if (burstMode != null)
             burstMode.setValueIndex(4);
