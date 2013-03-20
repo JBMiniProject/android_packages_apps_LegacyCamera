@@ -271,6 +271,10 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
     private TextView mRecordingTimeView;
     private RotateLayout mRecordingTimeRect;
 
+    // Burst mode
+    private int mBurstShotsDone = 0;
+    private boolean mBurstShotInProgress = false;
+
     // multiple cameras support
     private int mNumberOfCameras;
     private int mCameraId;
@@ -826,6 +830,10 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
             Log.v(TAG, "mJpegCallbackFinishTime = "
                     + mJpegCallbackFinishTime + "ms");
             mJpegPictureCallbackTime = 0;
+
+            if (mSnapshotOnIdle && mBurstShotsDone > 0) {
+                mHandler.post(mDoSnapRunnable);
+            }
         }
     }
 
@@ -1287,7 +1295,8 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
                 CameraSettings.KEY_PICTURE_SIZE,
                 CameraSettings.KEY_FOCUS_MODE,
                 CameraSettings.KEY_JPEG,
-                CameraSettings.KEY_TIMER_MODE
+                CameraSettings.KEY_TIMER_MODE,
+                CameraSettings.KEY_BURST_MODE
                 };
 
         CameraPicker.setImageResourceId(R.drawable.ic_switch_photo_facing_holo_light);
@@ -1515,7 +1524,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
 
     @Override
     public void onShutterButtonClick() {
-
+        int nbBurstShots = Integer.valueOf(mPreferences.getString(CameraSettings.KEY_BURST_MODE, "1"));
         if (!mTimerMode) {
             if (mCaptureMode != 0) {
                 mTimerMode = true;
@@ -1554,8 +1563,16 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
             return;
         }
 
-        mSnapshotOnIdle = false;
         mFocusManager.doSnap();
+        mBurstShotsDone++;
+
+        if (mBurstShotsDone == nbBurstShots) {
+            mBurstShotsDone = 0;
+            mSnapshotOnIdle = false;
+        } else if (mSnapshotOnIdle == false) {
+            // queue a new shot until we done all our shots
+            mSnapshotOnIdle = true;
+        }
     }
 
     private OnScreenHint mStorageHint;
@@ -1941,7 +1958,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         setCameraState(IDLE);
         mFocusManager.onPreviewStarted();
 
-        if (mSnapshotOnIdle) {
+        if (mSnapshotOnIdle && mBurstShotsDone > 0) {
             mHandler.post(mDoSnapRunnable);
         }
     }
