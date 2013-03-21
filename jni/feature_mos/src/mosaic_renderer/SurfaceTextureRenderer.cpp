@@ -29,7 +29,11 @@ const GLfloat g_vVertices[] = {
 };
 GLushort g_iIndices2[] = { 0, 1, 2, 3 };
 
-const int GL_TEXTURE_EXTERNAL_OES_ENUM = 0x8D65;
+#if defined(QCOM_HARDWARE) && defined(ARCH_ARM_V6)
+    const int GL_TEXTURE_EXTERNAL_OES_ENUM = 0x0DE1;
+#else
+    const int GL_TEXTURE_EXTERNAL_OES_ENUM = 0x8D65;
+#endif
 
 const int VERTEX_STRIDE = 6 * sizeof(GLfloat);
 
@@ -149,7 +153,9 @@ bool SurfaceTextureRenderer::DrawTexture(GLfloat *affine)
         // And, finally, execute the GL draw command.
         glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, g_iIndices2);
 
+#if defined(QCOM_HARDWARE) && defined(ARCH_ARM_V6)
         glFlush();
+#endif
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         succeeded = true;
     } while (false);
@@ -175,12 +181,20 @@ const char* SurfaceTextureRenderer::VertexShaderSource() const
 const char* SurfaceTextureRenderer::FragmentShaderSource() const
 {
     static const char gFragmentShader[] =
+#if defined(QCOM_HARDWARE) && defined(ARCH_ARM_V6)
+        "precision mediump float;\n"
+        "varying vec2 vTextureNormCoord;\n"
+        "uniform sampler2D sTexture;\n"
+        "void main() {\n"
+        "  gl_FragColor = texture2D(sTexture, vTextureNormCoord);\n"
+        "}\n";
+#else
         "precision mediump float;\n"
         "varying vec2 vTextureNormCoord;\n"
         "uniform samplerExternalOES sTexture;\n"
         "void main() {\n"
         "  gl_FragColor = texture2D(sTexture, vTextureNormCoord);\n"
         "}\n";
-
+#endif
     return gFragmentShader;
 }

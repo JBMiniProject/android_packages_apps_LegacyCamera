@@ -113,7 +113,9 @@ bool YVURenderer::DrawTexture()
 
         checkGlError("glDrawElements");
 
+#if defined(QCOM_HARDWARE) && defined(ARCH_ARM_V6)
         glFlush();
+#endif
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         succeeded = true;
     } while (false);
