@@ -1,0 +1,39 @@
+<!--  Copyright (C) 2013 JBMini Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="pref_camera_jpeg_title">Minőség</string>
+    <string name="pref_camera_jpeg_entry_super">Kiváló</string>
+    <string name="pref_camera_jpeg_entry_high">Magas</string>
+    <string name="pref_camera_jpeg_entry_medium">Közepes</string>
+    <string name="pref_camera_jpeg_entry_low">Gyenge</string>
+    <string name="pref_camera_timer_title">Időzítő</string>
+    <string name="pref_camera_timer_entry_0">Ki</string>
+    <string name="pref_camera_timer_entry_10">10mp</string>
+    <string name="pref_camera_timer_entry_20">20mp</string>
+    <string name="pref_camera_timer_entry_30">30mp</string>
+    <string name="pref_camera_timer_entry_40">40mp</string>
+    <string name="pref_camera_timer_entry_50">50mp</string>
+    <string name="pref_camera_timer_entry_60">60mp</string>
+    <string name="pref_camera_burst_title">Folyamatos mód</string>
+    <string name="pref_camera_burst_entry_off">Ki</string>
+    <string name="pref_camera_burst_entry_5">5 kép</string>
+    <string name="pref_camera_burst_entry_10">10 kép</string>
+    <string name="pref_camera_burst_entry_15">15 kép</string>
+    <string name="pref_camera_burst_entry_20">20 kép</string>
+
+</resources>
