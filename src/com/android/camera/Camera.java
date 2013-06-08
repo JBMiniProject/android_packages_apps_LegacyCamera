@@ -620,6 +620,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         mFlashIndicator = (ImageView) findViewById(R.id.onscreen_flash_indicator);
         mTimerIndicator = (ImageView) findViewById(R.id.onscreen_timer_indicator);
         mSceneIndicator = (ImageView) findViewById(R.id.onscreen_scene_indicator);
+        mGpsIndicator = (ImageView) findViewById(R.id.indicator_gps);
         mWhiteBalanceIndicator =
                 (ImageView) findViewById(R.id.onscreen_white_balance_indicator);
         mFocusIndicator = (ImageView) findViewById(R.id.onscreen_focus_indicator);
@@ -635,6 +636,15 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         } else {
             mGpsIndicator.setImageResource(R.drawable.ic_viewfinder_gps_no_signal);
         }
+        mGpsIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showGpsDisabledOnScreenIndicator() {
+        if (mGpsIndicator == null) {
+            return;
+        }
+        mGpsIndicator.setImageResource(R.drawable.ic_viewfinder_gps_off);
         mGpsIndicator.setVisibility(View.VISIBLE);
     }
 
@@ -1352,6 +1362,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
                 mHandler.removeMessages(SHOW_TAP_TO_FOCUS_TOAST);
                 showTapToFocusToast();
             }
+            if (mLocationManager != null
+                    && mLocationManager.isRecordLocation()
+                    && !mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+                showGpsDisabledOnScreenIndicator();
+            }
         mRecordingTimeRect.setOrientation(mOrientationCompensation);
         }
     }
@@ -1895,6 +1910,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
             mCameraDevice = null;
             setCameraState(PREVIEW_STOPPED);
             mFocusManager.onCameraReleased();
+            hideGpsOnScreenIndicator();
         }
     }
 

@@ -26,6 +26,13 @@
         <SurfaceView android:id="@+id/camera_preview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/indicator_gps"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            style="@style/MenuIndicator" />
         <com.android.camera.ui.RotateLayout android:id="@+id/recording_time_rect"
                 style="@style/ViewfinderLableLayout">
             <include layout="@layout/viewfinder_labels_video" android:id="@+id/labels" />

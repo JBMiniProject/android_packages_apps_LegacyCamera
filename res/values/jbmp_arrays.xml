@@ -95,4 +95,14 @@
         <item>ISO50</item>
     </string-array>
 
+    <array name="camera_gpsicon_icons" translatable="false">
+        <item>@drawable/ic_menuselect_gps_off</item>
+        <item>@drawable/ic_menuselect_gps_on</item>
+    </array>
+
+    <array name="camera_gpsicon_largeicons" translatable="false">
+        <item>@drawable/ic_viewfinder_gps_off</item>
+        <item>@drawable/ic_viewfinder_gps_on</item>
+    </array>
+
 </resources>
